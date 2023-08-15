@@ -1,0 +1,28 @@
+React app using json server 
+-----------------------------
+Objective
+Create a web application using ReactJS with the below problem statement.
+Problem statement
+Create an application where the following functionalities are present -
+1. User can create, delete and edit a card
+2. The card must contain name and a video/mp3 link
+3. The user has the flexibility to create bucket to categories the card according to his/her choice.
+5. User can move a cards to different bucket. 
+6. On clicking on the card a modal with an iframe should open which starts playing the video
+7. User can delete a single card or multiple card under a single bucket at once
+8. There should be a separate tab called history which lists the mp3/mp4 links that you have
+played i.e the card name, the link and the time it was played
+(
+    1. create watch history tab in home page
+    2. create new component for watch history (table-no,card name,link,time)
+    3. create watchhistory key in db.json and values array
+    4. add history to watchhistory, when user click on the videcard
+    5. get watchhistory from json file to  watch history component
+)
+
+
+Tech stack
+-----------
+1. Frontend: React
+2. Backend: create and use a json server
+3. Any additional stack/tools as per your preference.
