@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import { Modal, Button, FloatingLabel, Form } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { addCategory, deletecategory, getallcategory } from "../services/allApi";
+import { addCategory, deletecategory, getallcategory, getavideo, updateCategory } from "../services/allApi";
 import { Trash2 } from "react-feather";
 
 function Category() {
@@ -47,7 +47,6 @@ function Category() {
    const getCategoryList = async ()=>{
     //all category - after making api call
     const response = await getallcategory()
-    console.log(response);
     setallCategory(response.data);
   }
 
@@ -61,6 +60,28 @@ function Category() {
      await deletecategory(id)
      getCategoryList()
   }
+
+  //dragOver
+  const dragOver = (e)=>{
+    e.preventDefault()
+    console.log("Dragging over the category board!!!!");
+  }
+
+  //dropped
+  const dropped = async (e,categoryId) =>{
+    console.log("Target Category id:",categoryId);
+    let sourceCardId = e.dataTransfer.getData("cardId")
+    console.log("Source card id:",sourceCardId);
+    //logic to implement adding card in the given category
+    let {data} = await getavideo(sourceCardId)
+    console.log("Source video data:",data);
+
+    let selectedCategory = allCategory.find(item=>item.id===categoryId)
+    selectedCategory.allvideos.push(data)
+    console.log("Updated Target category details:",selectedCategory);
+    await updateCategory(categoryId,selectedCategory)
+    getCategoryList()
+  }
   
   return (
     <>
@@ -71,7 +92,11 @@ function Category() {
       </div>
     {
       allCategory?.map(item=>(
-        <div className="d-flex justify-content-between border rounded mt-2 p-3">
+        <div className="d-flex justify-content-between border rounded mt-2 p-3"
+        droppable
+        onDragOver={e=>dragOver(e)}
+        onDrop={e=>dropped(e,item?.id)}
+        >
           <h4> {item?.categoryName} </h4>
           <span onClick={e=>handleDeleteCategory(e,item?.id)}> <Trash2 color="red"></Trash2> </span>
         </div>

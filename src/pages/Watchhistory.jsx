@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { gethistory } from '../services/allApi'
+import { Link } from 'react-router-dom'
+import { ArrowLeft } from 'react-feather'
 
 function Watchhistory() {
     const [history,setHistory] = useState([])
@@ -14,7 +16,10 @@ function Watchhistory() {
 
   return (
     <>
-    <h1>Watchhistory</h1>
+    <div className='d-flex justify-content-between align-items-center'>
+        <h1>Watchhistory</h1>
+        <Link to={'/home'} style={{textDecoration:'none',color:'black'}}><span className='fw-bolder fs-4'> <ArrowLeft></ArrowLeft> Back</span></Link>
+    </div>
     <table className='table shadow m-3 rounded border'>
     <thead>
         <tr>

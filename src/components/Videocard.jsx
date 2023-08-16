@@ -1,12 +1,27 @@
 import React,{useState} from 'react';
 import { Card,Modal } from 'react-bootstrap';
 import { Trash2 } from 'react-feather';
-import { deletevideo } from '../services/allApi';
+import { addhistory, deletevideo } from '../services/allApi';
+import { v4 as uuidv4 } from 'uuid';
 
 function Videocard({card,handleDeleteStatus}) {
+ 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  const handleShow = async () => {
+    setShow(true);
+    const uid = uuidv4()
+    const {caption,url} = card
+    let cardDateTime = new Date()
+    if(uid!=="" && caption!=="" && url!=="" && cardDateTime!==""){
+      const body = {
+        id:uid,cardname:caption,url,date:cardDateTime
+      }
+    const response = await addhistory(body)
+    // console.log(response);
+    }
+  }
 
   //video remove
   const removeItem = async (id)=>{
@@ -20,9 +35,17 @@ function Videocard({card,handleDeleteStatus}) {
 
   }
 
+  //dragStarted
+  const dragStarted = (e,id)=>{
+    console.log("Drag started and source card id:"+id);
+    e.dataTransfer.setData("cardId",id)
+  }
   return (
     <>
-      <Card style={{height:'300px'}} className='shadow'>
+      <Card style={{height:'300px'}} className='shadow'
+      draggable
+      onDragStart={e=>dragStarted(e,card?.id)}
+      >
       <Card.Img  onClick={handleShow} variant="top" height={'200px'} src={card?.thumbnail} />
       <Card.Body>
         <Card.Title>

@@ -40,3 +40,13 @@ export const gethistory = async ()=>{
 export const addhistory = async (body)=>{
     return await commonRequest("POST",`${BASE_URL}/watchhistory`,body)
 }
+
+//getsinglevideo
+export const getavideo = async (id)=>{
+    return await commonRequest("GET",`${BASE_URL}/videos/${id}`,"")
+}
+
+//updateCategory
+export const updateCategory = async (id,body)=>{
+    return await commonRequest("PUT",`${BASE_URL}/categories/${id}`,body)
+}
