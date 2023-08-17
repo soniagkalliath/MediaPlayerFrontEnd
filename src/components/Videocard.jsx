@@ -4,7 +4,7 @@ import { Trash2 } from 'react-feather';
 import { addhistory, deletevideo } from '../services/allApi';
 import { v4 as uuidv4 } from 'uuid';
 
-function Videocard({card,handleDeleteStatus}) {
+function Videocard({card,handleDeleteStatus,insideCategory}) {
  
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -50,7 +50,10 @@ function Videocard({card,handleDeleteStatus}) {
       <Card.Body>
         <Card.Title>
             <span>{card?.caption.slice(0,15)}...</span>
+            { 
+            insideCategory?"":
             <span className='btn' onClick={()=>removeItem(card?.id)} style={{float:'right'}}><Trash2 color='red'/></span>
+            }
         </Card.Title>
       </Card.Body>
     </Card>
